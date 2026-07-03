@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #94a3b833; border-radius: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@layer utilities {
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  @keyframes spin3d { from { transform: rotateY(0deg) rotateX(14deg); } to { transform: rotateY(360deg) rotateX(14deg); } }
+  @keyframes ringPing { 0% { transform: scale(.65); opacity: .9; } 100% { transform: scale(2); opacity: 0; } }
+  .anim-fade, .animate-fade { animation: fadeUp .5s ease both; }
+  .anim-float { animation: floaty 6s ease-in-out infinite; }
+  .pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+  .anim-spin3d { animation: spin3d 1.5s linear infinite; transform-style: preserve-3d; }
+  .anim-ring { animation: ringPing 2.2s ease-out infinite; }
+  .grad-mesh {
+    background:
+      radial-gradient(600px 420px at 12% 8%, rgba(20, 184, 166, .16), transparent 60%),
+      radial-gradient(520px 380px at 88% 22%, rgba(16, 185, 129, .12), transparent 60%),
+      radial-gradient(560px 420px at 40% 96%, rgba(14, 165, 233, .10), transparent 60%);
+    animation: meshShift 16s ease-in-out infinite alternate;
+  }
+  @keyframes meshShift { from { background-position: 0 0, 0 0, 0 0; } to { background-position: 40px 24px, -36px 20px, 24px -30px; } }
+}
