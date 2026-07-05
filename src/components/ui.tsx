@@ -5,7 +5,7 @@ import { useApp } from "@/context/AppProvider";
 
 export const Card = ({ children, className = "", style }: any) => {
   const { T } = useApp();
-  return <div style={style} className={`min-w-0 rounded-2xl border backdrop-blur-xl ${T.card} ${className}`}>{children}</div>;
+  return <div style={style} className={`min-w-0 rounded-2xl border ${T.card} ${className}`}>{children}</div>;
 };
 
 export const Badge = ({ kind, children }: any) => {
@@ -21,7 +21,7 @@ export const Badge = ({ kind, children }: any) => {
 
 export const Progress = ({ pct, tone }: any) => (
   <div className="h-2 w-full rounded-full bg-slate-400/15 overflow-hidden">
-    <div className={`h-full rounded-full transition-all duration-700 ${tone || (pct >= 88 ? "bg-rose-500" : pct >= 70 ? "bg-amber-500" : "bg-emerald-500")}`} style={{ width: `${Math.min(100, pct)}%` }} />
+    <div className={`h-full rounded-full transition-[width] duration-700 ${tone || (pct >= 88 ? "bg-rose-500" : pct >= 70 ? "bg-amber-500" : "bg-emerald-500")}`} style={{ width: `${Math.min(100, pct)}%` }} />
   </div>
 );
 

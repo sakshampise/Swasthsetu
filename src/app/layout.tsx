@@ -17,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${sora.variable} ${inter.variable} font-body antialiased`}>
+        <script dangerouslySetInnerHTML={{ __html: `try{var s=JSON.parse(localStorage.getItem("swasthsetu")||"{}");if(s.dark)document.documentElement.classList.add("dark")}catch(e){}` }} />
         <AppProvider>
           <BootLoader />
           {children}

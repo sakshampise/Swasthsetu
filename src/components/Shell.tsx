@@ -83,7 +83,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <button onClick={() => setDark(!dark)} className={`rounded-full border p-2 ${T.card}`}>{dark ? <Sun size={15} /> : <Moon size={15} />}</button>
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
+        <main className="stable-gutter flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
       </div>
       <Toast />
     </div>
