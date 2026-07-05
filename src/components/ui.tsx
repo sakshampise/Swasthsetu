@@ -5,7 +5,7 @@ import { useApp } from "@/context/AppProvider";
 
 export const Card = ({ children, className = "", style }: any) => {
   const { T } = useApp();
-  return <div style={style} className={`rounded-2xl border backdrop-blur-xl ${T.card} ${className}`}>{children}</div>;
+  return <div style={style} className={`min-w-0 rounded-2xl border backdrop-blur-xl ${T.card} ${className}`}>{children}</div>;
 };
 
 export const Badge = ({ kind, children }: any) => {

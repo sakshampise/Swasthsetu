@@ -10,6 +10,7 @@
 }
 
 @layer utilities {
+  .recharts-responsive-container { min-width: 0; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
   @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
@@ -27,7 +28,5 @@
       radial-gradient(600px 420px at 12% 8%, rgba(20, 184, 166, .16), transparent 60%),
       radial-gradient(520px 380px at 88% 22%, rgba(16, 185, 129, .12), transparent 60%),
       radial-gradient(560px 420px at 40% 96%, rgba(14, 165, 233, .10), transparent 60%);
-    animation: meshShift 16s ease-in-out infinite alternate;
   }
-  @keyframes meshShift { from { background-position: 0 0, 0 0, 0 0; } to { background-position: 40px 24px, -36px 20px, 24px -30px; } }
 }
