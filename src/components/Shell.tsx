@@ -8,7 +8,6 @@ import {
 import { useApp } from "@/context/AppProvider";
 import { Logo, LangPicker, Toast } from "@/components/ui";
 import { CENTRES } from "@/lib/data";
-import AssistantOrb from "@/components/three/AssistantOrb";
 
 export const NAV = [
   { key: "dashboard", href: "/dashboard", icon: Activity, roles: ["admin", "manager", "doctor"] },
@@ -86,7 +85,6 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         </header>
         <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
       </div>
-      <AssistantOrb />
       <Toast />
     </div>
   );

@@ -42,5 +42,4 @@ pushes critical alerts to FCM topics (`centre-wakad`, …).
 - Swap it into `app/api/forecast/route.ts` (the one commented line).
 
 ## Troubleshooting
-- **Blank 3D on old GPUs/webviews:** UI still works; scene silently degrades. Reduced-motion users get a static frame by design.
 - **Type warnings on `npm run dev`:** intentional `@ts-nocheck` on ported pages; production `next build` ignores via `next.config.mjs`.

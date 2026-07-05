@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppProvider";
-import { Card, Logo, TiltCard } from "@/components/ui";
+import { Card, Logo } from "@/components/ui";
 import { DEMO_USERS } from "@/lib/data";
 
 export default function LoginPage() {
@@ -16,8 +16,7 @@ export default function LoginPage() {
       <div className="grad-mesh pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full bg-teal-500/20 blur-[110px]" />
       <div className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-emerald-500/15 blur-[110px]" />
-      <TiltCard className="relative z-10 w-full max-w-md">
-        <Card className="w-full p-7 anim-fade">
+      <Card className="relative z-10 w-full max-w-md p-7 anim-fade">
           <Link href="/" className={`mb-5 block text-xs font-semibold ${T.sub} hover:text-teal-500`}>← SwasthSetu AI</Link>
           <Logo />
           <h2 className={`mt-5 font-display text-xl font-bold ${T.head}`}>{t.welcome}</h2>
@@ -47,8 +46,7 @@ export default function LoginPage() {
               ))}
             </div>
           </div>
-        </Card>
-      </TiltCard>
+      </Card>
     </div>
   );
 }

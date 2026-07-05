@@ -1,6 +1,6 @@
 # Pitch Deck — SwasthSetu AI (12 slides)
 
-1. **Title** — SwasthSetu AI: the AI command centre for PHCs & CHCs. Team, Track 3, Google Cloud. *(Open on the 3D globe.)*
+1. **Title** — SwasthSetu AI: the AI command centre for PHCs & CHCs. Team, Track 3, Google Cloud. *(Open on the animated landing hero.)*
 2. **The problem** — stock-outs, unmanaged footfall, no bed visibility, unpredictable attendance, manual registers. Districts learn about crises after they happen.
 3. **Cost of the status quo** — a mother sent away for want of ORS; 90% occupancy at CHC Baner discovered at midnight; expired stock written off.
 4. **The insight** — every crisis is visible 3–7 days early in the data. It just needs to be watched, forecast and acted on — automatically.

@@ -8,26 +8,16 @@ An AI command centre for Primary & Community Health Centres (PHC/CHC): live medi
 
 ---
 
-## ✨ Premium 3D experience
+## ✨ Modern motion design
 
-A world-class WebGL layer, built to feel like Apple/Vercel/Linear-grade sites — never gimmicky:
+Simple, fast, professional — no WebGL, no heavy libraries beyond Framer Motion:
 
-| Element | Where |
-|---|---|
-| Interactive healthcare **globe** (10 live centres, risk-coloured markers) | Landing, chapter 1 |
-| **Animated supply-chain routes** driven by the real redistribution engine | Globe + district cluster |
-| Floating **holographic hospital** + centre buildings with glowing status indicators | Landing, chapter 2 |
-| **Health dashboard floating in 3D space** + **AI hologram assistant** | Landing, chapter 3 |
-| Floating **medicine capsule, vaccine vial, medical cross**, AI network nodes | Around the globe |
-| **Smooth scroll-choreographed camera** (globe → cluster → holo deck) | Whole landing page |
-| **Mouse parallax**, soft lighting, **bloom**, contact shadows, fog, **particles** | Scene-wide |
-| **Animated gradient-mesh** background + glassmorphism UI over the canvas | Everywhere |
-| **3D medical-cross loading animation** + premium route transitions | App-wide |
-| **AI assistant orb** (live WebGL) floating in the dashboard | All app pages |
-
-**Performance:** device-pixel-ratio clamping, mobile scene budget (fewer particles, no post-processing), `prefers-reduced-motion` support, zero network assets (procedural textures only) — tuned for 60 FPS.
-
-Stack: **React Three Fiber + Three.js + drei + @react-three/postprocessing + Framer Motion + GSAP**.
+- **Staggered fade-up hero** with an animated **health-pulse (ECG) line**
+- **Animated gradient-mesh** background + soft aurora blobs (pure CSS)
+- **Floating live-risk preview card** and gentle hover-lift feature cards
+- **Scroll-reveal sections** (Framer Motion `whileInView`)
+- **Minimal boot splash** (pulsing logo + progress sweep) and route transitions
+- Respects `prefers-reduced-motion`; zero animation assets to download
 
 ## 🧠 Core capabilities (Track 3 brief)
 
@@ -87,13 +77,12 @@ Full guide: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
 ```
 src/
   app/                 # Next.js App Router pages
-    page.tsx           # 3D landing (scroll-choreographed WebGL)
+    page.tsx           # animated landing (Framer Motion + CSS)
     login/             # auth with one-tap demo roles
     dashboard/         # shell + 10 feature pages
     api/alerts         # GET alert feed (JSON)
     api/forecast       # POST per-centre forecast
   components/
-    three/             # R3F scenes: globe, hospitals, holo-deck, orb, loader
     ui.tsx, Shell.tsx
   context/AppProvider  # auth · language · theme · data · toasts
   lib/                 # data, AI heuristics, i18n, GCP adapters

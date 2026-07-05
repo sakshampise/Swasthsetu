@@ -3,9 +3,7 @@
 ```
 Browser ─ Next.js 14 (App Router, Vercel)
 │  ├─ React 18 + Tailwind glassmorphism UI (EN/HI/MR i18n)
-│  ├─ WebGL layer: React Three Fiber + drei + postprocessing
-│  │    Globe · hospital cluster · holo-deck · assistant orb · cross loader
-│  ├─ Recharts analytics · Framer Motion transitions · GSAP hero timeline
+│  ├─ Recharts analytics · Framer Motion reveals & route transitions
 │  └─ AppProvider: auth/session, language, theme, data, toasts (localStorage)
 │
 ├─ /api/alerts     GET  → alert engine (lib/ai.ts)
@@ -23,10 +21,7 @@ Browser ─ Next.js 14 (App Router, Vercel)
 - **riskScore** — stock 35% · beds 25% · attendance 25% · labs 15%
 - **buildAlerts** — all Track-3 example alerts, localized
 
-## 3D performance budget (60 FPS target)
-- Single persistent Canvas on landing; camera dolly instead of remounts
-- `dpr` clamped (≤1.8 desktop, ≤1.5 mobile); procedural textures only (no fetches)
-- Mobile: ~50% particles/points, post-processing & contact shadows off
-- `prefers-reduced-motion`: static frame, `frameloop="demand"`
-- Scroll/pointer written to a mutable store — zero React re-renders per frame
-- Additive sprite "glow" fakes bloom cheaply where the composer is off
+## Motion design (simple & fast)
+- Framer Motion: staggered hero, scroll-reveal sections, route transitions
+- CSS keyframes: gradient-mesh drift, ECG pulse line, float, boot splash
+- `prefers-reduced-motion` respected; no animation assets, no WebGL

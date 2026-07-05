@@ -95,19 +95,3 @@ export const LangPicker = ({ compact }: any) => {
     </div>
   );
 };
-
-/* Pointer-tilt glass panel — the "floating 3D dashboard" treatment. */
-export const TiltCard = ({ children, className = "" }: any) => {
-  const [tf, setTf] = useState("perspective(950px) rotateX(0deg) rotateY(0deg)");
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-    setTf(`perspective(950px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateZ(6px)`);
-  };
-  return (
-    <div className={className} onMouseMove={onMove} onMouseLeave={() => setTf("perspective(950px) rotateX(0deg) rotateY(0deg)")}
-      style={{ transform: tf, transition: "transform .18s ease-out", transformStyle: "preserve-3d", willChange: "transform" }}>
-      {children}
-    </div>
-  );
-};
