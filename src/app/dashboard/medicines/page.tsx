@@ -31,7 +31,7 @@ export default function Medicines() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
         {isAdmin && (
-          <select value={centre} onChange={(e) => setCentre(e.target.value)} className={`rounded-xl border px-3 py-2 text-sm font-semibold outline-none ${T.input}`}>
+          <select aria-label="Health centre" value={centre} onChange={(e) => setCentre(e.target.value)} className={`rounded-xl border px-3 py-2 text-sm font-semibold outline-none ${T.input}`}>
             {centres.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         )}

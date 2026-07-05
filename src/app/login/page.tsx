@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppProvider";
@@ -7,10 +8,13 @@ import { Card, Logo } from "@/components/ui";
 import { DEMO_USERS } from "@/lib/data";
 
 export default function LoginPage() {
-  const { t, T, login } = useApp();
+  const { t, T, login, user, hydrated } = useApp();
+  const router = useRouter();
   const [email, setEmail] = useState(DEMO_USERS[0].email);
   const [pass, setPass] = useState(DEMO_USERS[0].pass);
-  const submit = (e: React.FormEvent) => { e.preventDefault(); const u = DEMO_USERS.find((x) => x.email === email) || DEMO_USERS[0]; login(u); };
+  const [err, setErr] = useState("");
+  useEffect(() => { if (hydrated && user) router.replace("/dashboard"); }, [hydrated, user, router]);
+  const submit = (e: React.FormEvent) => { e.preventDefault(); const u = DEMO_USERS.find((x) => x.email === email && x.pass === pass); if (!u) { setErr("Invalid credentials — use a demo account below."); return; } setErr(""); login(u); };
   return (
     <div className={`relative flex min-h-screen items-center justify-center ${T.app} font-body p-4 overflow-hidden`}>
       <div className="grad-mesh pointer-events-none absolute inset-0" />
@@ -30,6 +34,7 @@ export default function LoginPage() {
               <label className={`text-[11px] font-bold uppercase tracking-wider ${T.sub}`}>{t.password}</label>
               <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} className={`mt-1 w-full rounded-xl border px-3.5 py-2.5 text-sm outline-none focus:border-teal-500 ${T.input}`} />
             </div>
+            {err && <p className="text-xs font-semibold text-rose-500">{err}</p>}
             <button className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-emerald-500 py-3 font-semibold text-white shadow-lg shadow-teal-600/30 transition hover:brightness-110">{t.signIn}</button>
           </form>
           <div className="mt-6">

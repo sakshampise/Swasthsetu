@@ -35,3 +35,8 @@
 /* Pre-hydration body colour — prevents the light→dark flash on PC refresh. */
 body { background: #f2f7f6; }
 html.dark body { background: #07120f; }
+
+/* Native form controls (select popups, scrollbars, date pickers) follow the theme. */
+:root { color-scheme: light; }
+html.dark { color-scheme: dark; }
+html.dark select option { background: #0c1f1a; color: #e2e8f0; }

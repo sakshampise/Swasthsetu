@@ -18,7 +18,7 @@ export default function Doctors() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         {user.role === "admin" && (
-          <select value={centre} onChange={(e) => setCentre(e.target.value)} className={`rounded-xl border px-3 py-2 text-sm font-semibold outline-none ${T.input}`}>
+          <select aria-label="Health centre" value={centre} onChange={(e) => setCentre(e.target.value)} className={`rounded-xl border px-3 py-2 text-sm font-semibold outline-none ${T.input}`}>
             {centres.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
           </select>
         )}

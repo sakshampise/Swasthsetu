@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { I18N, type Lang } from "@/lib/i18n";
 import { CENTRES, MEDS0, DEMO_USERS } from "@/lib/data";
@@ -42,6 +42,7 @@ export default function AppProvider({ children }: { children: React.ReactNode })
     if (!hydrated) return;
     localStorage.setItem("swasthsetu", JSON.stringify({ lang, dark, user }));
     document.documentElement.classList.toggle("dark", dark);
+    document.documentElement.lang = lang;
   }, [lang, dark, user, hydrated]);
 
   const t = I18N[lang];
@@ -49,7 +50,8 @@ export default function AppProvider({ children }: { children: React.ReactNode })
   const alerts = useMemo(() => buildAlerts(meds, CENTRES, t), [meds, t]);
   const page = PAGE_OF[pathname] || "dashboard";
 
-  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 2600); };
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showToast = (msg: string) => { setToast(msg); if (toastTimer.current) clearTimeout(toastTimer.current); toastTimer.current = setTimeout(() => setToast(null), 2600); };
   const setPage = (key: string) => router.push(ROUTES[key] || "/dashboard");
   const setView = (v: string) => router.push(v === "login" ? "/login" : v === "app" ? "/dashboard" : "/");
   const login = (u: any) => { setUser(u); router.push("/dashboard"); };

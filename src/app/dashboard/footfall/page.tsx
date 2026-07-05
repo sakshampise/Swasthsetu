@@ -17,7 +17,7 @@ export default function Footfall() {
   return (
     <div className="space-y-4">
       {user.role === "admin" ? (
-        <select value={centre} onChange={(e) => setCentre(e.target.value)} className={`rounded-xl border px-3 py-2 text-sm font-semibold outline-none ${T.input}`}>
+        <select aria-label="Health centre" value={centre} onChange={(e) => setCentre(e.target.value)} className={`rounded-xl border px-3 py-2 text-sm font-semibold outline-none ${T.input}`}>
           {centres.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
         </select>
       ) : <p className={`text-sm font-semibold ${T.head}`}>{t.myCentre}: {c.name}</p>}
