@@ -5,7 +5,7 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { BarChart3, Sun, Download } from "lucide-react";
 import { useApp } from "@/context/AppProvider";
 import { Card, SectionTitle } from "@/components/ui";
-import { daysLeft, occPct, riskScore } from "@/lib/ai";
+import { daysLeft, occPct, riskScore, sRand } from "@/lib/ai";
 
 export default function Reports() {
   const { t, T, meds, centres, showToast } = useApp();

@@ -4,7 +4,7 @@
 // function signatures are already shaped for that handoff.
 import type { Centre, Med } from "./data";
 
-const sRand = (n) => { const x = Math.sin(n * 9301 + 49297) * 233280; return x - Math.floor(x); };
+export const sRand = (n) => { const x = Math.sin(n * 9301 + 49297) * 233280; return x - Math.floor(x); };
 export const daysLeft = (m) => (m.use > 0 ? Math.floor(m.stock / m.use) : 999);
 export const medStatus = (m) => { const d = daysLeft(m); return d <= 3 || m.stock === 0 ? "critical" : d <= 7 || m.stock < m.thr ? "low" : "healthy"; };
 export const occPct = (c) => Math.round((c.occupied / c.beds) * 100);
