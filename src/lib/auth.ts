@@ -41,7 +41,7 @@ const normalizeRole = (role?: string | null): AppRole => {
 };
 
 export function routeForRole(role?: string | null) {
-  switch (normalizeRole(role)) {
+  switch (role) {
     case "patient": return "/patient";
     case "doctor": return "/doctor";
     case "staff":
@@ -64,15 +64,15 @@ export async function getProfile(user: SupabaseUser): Promise<AppUser> {
     .maybeSingle();
 
   if (error) throw error;
+  if (!data) throw new Error("Profile not found in database.");
 
-  const metadata = user.user_metadata || {};
   return {
     id: user.id,
-    name: data?.full_name || metadata.full_name || metadata.name || user.email || "User",
+    name: data.full_name || user.email || "User",
     email: user.email || "",
-    role: normalizeRole(data?.role || metadata.role),
-    centre: data?.centre || metadata.centre || null,
-    phone: data?.phone || metadata.phone || null,
+    role: data.role as AppRole,
+    centre: data.centre || null,
+    phone: data.phone || null,
   };
 }
 

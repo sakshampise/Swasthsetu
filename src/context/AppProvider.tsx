@@ -50,13 +50,8 @@ export default function AppProvider({ children }: { children: React.ReactNode })
           try {
             setUser(await getProfile(data.user));
           } catch {
-            setUser({
-              id: data.user.id,
-              name: data.user.user_metadata?.full_name || data.user.email || "User",
-              email: data.user.email || "",
-              role: data.user.user_metadata?.role || "patient",
-              centre: data.user.user_metadata?.centre || null,
-            });
+            setUser(null);
+            try { await supabase.auth.signOut(); } catch {}
           }
         }
       }
@@ -75,13 +70,8 @@ export default function AppProvider({ children }: { children: React.ReactNode })
           try {
             setUser(await getProfile(session.user));
           } catch {
-            setUser({
-              id: session.user.id,
-              name: session.user.user_metadata?.full_name || session.user.email || "User",
-              email: session.user.email || "",
-              role: session.user.user_metadata?.role || "patient",
-              centre: session.user.user_metadata?.centre || null,
-            });
+            setUser(null);
+            try { await supabase.auth.signOut(); } catch {}
           }
         })
       : { data: null as any };
