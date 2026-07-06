@@ -3,7 +3,7 @@
 export type Centre = { id: string; name: string; type: "PHC" | "CHC"; area: string; beds: number; occupied: number; opd: number; emergency: number; docTotal: number; docPresent: number; att: number; testsOk: number; testsTotal: number; seed: number };
 export type Med = { id: number; centre: string; name: string; cat: string; stock: number; use: number; thr: number; exp: string };
 
-export const CENTRES = [
+export const CENTRES: Centre[] = [
   { id: "wakad", name: "PHC Wakad", type: "PHC", area: "Mulshi", beds: 30, occupied: 26, opd: 212, emergency: 18, docTotal: 6, docPresent: 4, att: 71, testsOk: 8, testsTotal: 12, seed: 3 },
   { id: "aundh", name: "PHC Aundh", type: "PHC", area: "Haveli", beds: 30, occupied: 14, opd: 128, emergency: 6, docTotal: 6, docPresent: 6, att: 94, testsOk: 11, testsTotal: 12, seed: 7 },
   { id: "hadapsar", name: "PHC Hadapsar", type: "PHC", area: "Haveli", beds: 24, occupied: 17, opd: 156, emergency: 9, docTotal: 5, docPresent: 3, att: 58, testsOk: 7, testsTotal: 12, seed: 11 },
@@ -16,7 +16,7 @@ export const CENTRES = [
   { id: "swargate", name: "CHC Swargate", type: "CHC", area: "Pune City", beds: 75, occupied: 49, opd: 301, emergency: 21, docTotal: 14, docPresent: 12, att: 86, testsOk: 19, testsTotal: 20, seed: 37 },
 ];
 
-export const MEDS0 = [
+export const MEDS0: Med[] = [
   { id: 1, centre: "wakad", name: "Paracetamol 500mg", cat: "Analgesic", stock: 240, use: 85, thr: 500, exp: "2026-11-10" },
   { id: 2, centre: "wakad", name: "ORS Sachets", cat: "Rehydration", stock: 60, use: 32, thr: 200, exp: "2027-02-01" },
   { id: 3, centre: "wakad", name: "Amoxicillin 250mg", cat: "Antibiotic", stock: 410, use: 34, thr: 300, exp: "2026-09-18" },
@@ -69,5 +69,145 @@ export const DEMO_USERS = [
   { role: "admin", name: "Dr. Meera Joshi", email: "admin@swasthsetu.in", pass: "admin123", centre: null },
   { role: "manager", name: "Rahul Patil", email: "manager.wakad@swasthsetu.in", pass: "phc123", centre: "wakad" },
   { role: "doctor", name: "Dr. A. Kulkarni", email: "doctor@swasthsetu.in", pass: "doc123", centre: "wakad" },
+  // New demo users for the expanded healthcare ecosystem.
+  // Patient demo account. Represents a typical end-user with their own dashboard.
+  { role: "patient", name: "Yash Patel", email: "patient@swasthsetu.in", pass: "pat123", centre: null },
+  // PHC staff demo account. This account is meant for front desk and inventory staff.
+  { role: "staff", name: "Anita Sharma", email: "staff@swasthsetu.in", pass: "staff123", centre: "wakad" },
+];
+
+// ---------------------------------------------------------------------------
+// New data structures for the multi-role healthcare platform.
+// These arrays are seed/demo datasets for non-auth analytics and UI previews. Real authentication is handled by Supabase Auth.
+
+// Patient demographic and profile information.
+export type Patient = {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  dob?: string;
+  gender?: string;
+  bloodType?: string;
+  address?: string;
+  allergies?: string[];
+  vaccinations?: string[];
+};
+
+// Appointment definition. Associates a patient with a doctor and centre.
+export type Appointment = {
+  id: string;
+  patientId: string;
+  doctorId: string;
+  centre: string;
+  date: string;
+  time: string;
+  status: "booked" | "accepted" | "completed" | "cancelled";
+  reason?: string;
+};
+
+// Prescription record. Each prescription belongs to a patient/doctor appointment.
+export type Prescription = {
+  id: string;
+  appointmentId: string;
+  patientId: string;
+  doctorId: string;
+  medications: { name: string; dosage: string; duration: string; notes?: string }[];
+};
+
+// Lab report record. Contains a summary and a hypothetical file link.
+export type LabReport = {
+  id: string;
+  appointmentId: string;
+  patientId: string;
+  title: string;
+  summary: string;
+  url: string;
+};
+
+// Health metrics captured by the patient over time.
+export type HealthMetric = {
+  timestamp: string;
+  type: "bp" | "weight" | "sugar" | "pulse" | "temperature";
+  value: number;
+};
+
+// Mock patient profiles.
+export const PATIENTS0: Patient[] = [
+  {
+    id: "p1",
+    name: "Yash Patel",
+    email: "patient@swasthsetu.in",
+    phone: "+91-9876543210",
+    dob: "1990-05-12",
+    gender: "Male",
+    bloodType: "O+",
+    address: "Pune, Maharashtra",
+    allergies: ["Peanuts"],
+    vaccinations: ["COVID-19", "Hepatitis B"],
+  },
+];
+
+// Mock appointments for the sample patient.
+export const APPOINTMENTS0: Appointment[] = [
+  {
+    id: "a1",
+    patientId: "p1",
+    doctorId: "d1",
+    centre: "wakad",
+    date: "2026-07-10",
+    time: "10:30",
+    status: "booked",
+    reason: "Routine check-up",
+  },
+  {
+    id: "a2",
+    patientId: "p1",
+    doctorId: "d1",
+    centre: "wakad",
+    date: "2026-06-20",
+    time: "14:00",
+    status: "completed",
+    reason: "Fever and cough",
+  },
+];
+
+// Mock prescriptions for the sample patient.
+export const PRESCRIPTIONS0: Prescription[] = [
+  {
+    id: "pr1",
+    appointmentId: "a2",
+    patientId: "p1",
+    doctorId: "d1",
+    medications: [
+      { name: "Paracetamol 500mg", dosage: "1 tablet", duration: "5 days", notes: "After meals" },
+      { name: "Cough Syrup", dosage: "10 ml", duration: "3 days", notes: "Twice daily" },
+    ],
+  },
+];
+
+// Mock lab reports.
+export const LABREPORTS0: LabReport[] = [
+  {
+    id: "l1",
+    appointmentId: "a2",
+    patientId: "p1",
+    title: "Complete Blood Count",
+    summary: "Normal haemoglobin, slightly elevated WBC count.",
+    url: "/reports/cbc-report.pdf",
+  },
+];
+
+// Mock health metrics series for the sample patient.
+export const HEALTH_METRICS0: HealthMetric[] = [
+  { timestamp: "2026-06-01", type: "bp", value: 120 },
+  { timestamp: "2026-06-01", type: "weight", value: 68 },
+  { timestamp: "2026-06-01", type: "sugar", value: 95 },
+  { timestamp: "2026-06-02", type: "bp", value: 118 },
+  { timestamp: "2026-06-02", type: "weight", value: 67.8 },
+  { timestamp: "2026-06-02", type: "sugar", value: 97 },
+  { timestamp: "2026-06-03", type: "bp", value: 122 },
+  { timestamp: "2026-06-03", type: "weight", value: 67.6 },
+  { timestamp: "2026-06-03", type: "sugar", value: 92 },
 ];
 

@@ -34,6 +34,10 @@ export const I18N = {
     weeklyOpd: "OPD vs emergency — this week", runsOutIn: "runs out in", surplusAt: "surplus at",
     interventionList: "Centres flagged for intervention", viewCentre: "Open", myCentre: "My centre",
     quickLogin: "One-tap demo login", ago: "ago", now: "now", perDay: "/day", beds_s: "beds",
+    forgotPass: "Forgot password?", resetTitle: "Reset password", resetSend: "Send reset link",
+    resetSent: "If an account exists for this email, a reset link has been sent.",
+    resetDemoNote: "Demo build — use a one-tap demo account below.", backToLogin: "Back to sign in",
+    signedInAs: "Signed in as", continueBtn: "Continue",
   },
   hi: {
     tagline: "PHC व CHC के लिए AI-संचालित कमांड सेंटर",
@@ -66,6 +70,10 @@ export const I18N = {
     weeklyOpd: "OPD बनाम आपातकाल — इस सप्ताह", runsOutIn: "समाप्त होगा", surplusAt: "अधिशेष",
     interventionList: "हस्तक्षेप हेतु चिह्नित केंद्र", viewCentre: "खोलें", myCentre: "मेरा केंद्र",
     quickLogin: "एक-टैप डेमो लॉगिन", ago: "पहले", now: "अभी", perDay: "/दिन", beds_s: "बेड",
+    forgotPass: "पासवर्ड भूल गए?", resetTitle: "पासवर्ड रीसेट करें", resetSend: "रीसेट लिंक भेजें",
+    resetSent: "यदि इस ईमेल से खाता मौजूद है, तो रीसेट लिंक भेज दिया गया है।",
+    resetDemoNote: "डेमो बिल्ड — नीचे दिए एक-टैप डेमो खाते इस्तेमाल करें।", backToLogin: "साइन इन पर वापस",
+    signedInAs: "साइन इन", continueBtn: "जारी रखें",
   },
   mr: {
     tagline: "PHC व CHC साठी AI-आधारित कमांड सेंटर",
@@ -98,6 +106,10 @@ export const I18N = {
     weeklyOpd: "OPD वि. आपत्कालीन — या आठवड्यात", runsOutIn: "संपेल", surplusAt: "अधिशेष",
     interventionList: "हस्तक्षेपासाठी नोंदलेली केंद्रे", viewCentre: "उघडा", myCentre: "माझे केंद्र",
     quickLogin: "एक-टॅप डेमो लॉगिन", ago: "पूर्वी", now: "आत्ता", perDay: "/दिवस", beds_s: "बेड",
+    forgotPass: "पासवर्ड विसरलात?", resetTitle: "पासवर्ड रीसेट करा", resetSend: "रीसेट लिंक पाठवा",
+    resetSent: "या ईमेलचे खाते असल्यास, रीसेट लिंक पाठवली आहे.",
+    resetDemoNote: "डेमो बिल्ड — खालील एक-टॅप डेमो खाती वापरा.", backToLogin: "साइन इनकडे परत",
+    signedInAs: "साइन इन", continueBtn: "सुरू ठेवा",
   },
 };
 

@@ -31,33 +31,71 @@ Simple, fast, professional — no WebGL, no heavy libraries beyond Framer Motion
 8. Smart redistribution: surplus → deficit transfer suggestions
 9. Auto-flagging underperforming centres for district admins (AI risk score)
 
-Plus: 3 roles (District Admin / PHC-CHC Manager / Doctor), full **English · हिन्दी · मराठी** UI, dark/light glassmorphism theme, mobile responsive.
+Plus: expanded role-specific portals for **Patient · Doctor · PHC Staff · District Admin**, full **English · हिन्दी · मराठी** UI, dark/light glassmorphism theme, mobile responsive.
+
+## 🏥 Expanded healthcare ecosystem
+
+SwasthSetu AI now includes separate protected workflows for every role:
+
+- **Patient Portal** — appointments, medical records, lab reports, medicine reminders, health tracker, AI assistant and SOS emergency flow.
+- **Doctor Portal** — daily appointments, patient queue, consultation workspace, prescription builder, schedule and AI clinical assistant.
+- **PHC Staff Portal** — reception, queue management, inventory, bed management, lab status, pharmacy dispensing and attendance.
+- **District Admin Dashboard** — live analytics, resource monitoring, forecasting, redistribution and performance reports.
 
 ## 🚀 Quickstart
 
 ```bash
 npm install
+cp .env.example .env.local
+# Fill NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local
 npm run dev        # http://localhost:3000
 ```
 
-No env vars needed — `NEXT_PUBLIC_USE_MOCK=true` is the default and everything runs on bundled Pune-district demo data.
+This project now uses **real Supabase Authentication only**. It does not use mock/local authentication. If Supabase environment variables are missing, login/signup/forgot password/applications are disabled and the login page shows a setup warning.
 
-### Demo logins
+### Real authentication
+
+Supported flows:
+
+- Login with email and password
+- New patient account creation
+- Forgot password / reset link
+- Logout
+- Role-based redirects and protected routes
+- Professional access application for Doctor, PHC Staff, Manager and District Admin
+
+To enable real accounts:
+
+1. Create a Supabase project.
+2. Run `supabase/schema.sql` in Supabase SQL Editor.
+3. Enable Email provider in Supabase Authentication.
+4. Add these variables in `.env.local` locally, or in Vercel → Project → Settings → Environment Variables:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_PUBLIC_KEY
+```
+
+See [`docs/AUTH_SETUP.md`](docs/AUTH_SETUP.md) for the complete setup guide.
+
+### Real test account reference
+
+The test account section is still boldly visible on the login page, but those buttons only fill test credentials. They do not bypass authentication. Create these accounts in Supabase Auth first and set their `auth_profiles.role` values.
 
 | Role | Email | Password |
 |---|---|---|
 | District Administrator | `admin@swasthsetu.in` | `admin123` |
 | PHC/CHC Manager (Wakad) | `manager.wakad@swasthsetu.in` | `phc123` |
-| Doctor/Staff | `doctor@swasthsetu.in` | `doc123` |
-
-(One-tap buttons for all three are on the login page.)
+| Doctor | `doctor@swasthsetu.in` | `doc123` |
+| Patient | `patient@swasthsetu.in` | `pat123` |
+| PHC Staff | `staff@swasthsetu.in` | `staff123` |
 
 ## ☁️ Deploy to Vercel (~5 minutes)
 
 1. Push this folder to a GitHub repo.
 2. [vercel.com](https://vercel.com) → **Add New Project** → import the repo.
 3. Framework is auto-detected as Next.js — click **Deploy**. Done.
-4. *(Optional live mode)* add `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, set `NEXT_PUBLIC_USE_MOCK=false`, and run `supabase/schema.sql` in Supabase.
+4. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel Environment Variables, run `supabase/schema.sql`, then redeploy.
 
 Full guide: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
 

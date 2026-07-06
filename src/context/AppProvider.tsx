@@ -3,6 +3,8 @@ import React, { createContext, useContext, useEffect, useMemo, useRef, useState 
 import { usePathname, useRouter } from "next/navigation";
 import { I18N, type Lang } from "@/lib/i18n";
 import { CENTRES, MEDS0, DEMO_USERS } from "@/lib/data";
+import { supabase } from "@/lib/supabase";
+import { getProfile, routeForRole, signInWithEmail, signOutUser, signUpPatient, sendPasswordReset, type PatientSignupPayload } from "@/lib/auth";
 import { buildAlerts } from "@/lib/ai";
 import { themes } from "@/lib/theme";
 
@@ -28,22 +30,74 @@ export default function AppProvider({ children }: { children: React.ReactNode })
   const [focusCentre, setFocusCentre] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
-  // Restore session + prefs (localStorage is fine in the real app, unlike the sandboxed preview).
+  // Restore UI preferences and subscribe to the real Supabase Auth session.
+  // No localStorage/mock auth fallback is used. If Supabase env vars are missing,
+  // the app simply has no authenticated session and auth actions throw a clear
+  // configuration error from lib/supabase.ts.
   useEffect(() => {
-    try {
-      const s = JSON.parse(localStorage.getItem("swasthsetu") || "{}");
-      if (s.lang) setLang(s.lang);
-      if (typeof s.dark === "boolean") setDark(s.dark);
-      if (s.user) setUser(s.user);
-    } catch {}
-    setHydrated(true);
+    let mounted = true;
+
+    const restore = async () => {
+      try {
+        const s = JSON.parse(localStorage.getItem("swasthsetu_prefs") || "{}");
+        if (s.lang) setLang(s.lang);
+        if (typeof s.dark === "boolean") setDark(s.dark);
+      } catch {}
+
+      if (supabase) {
+        const { data } = await supabase.auth.getUser();
+        if (mounted && data.user) {
+          try {
+            setUser(await getProfile(data.user));
+          } catch {
+            setUser({
+              id: data.user.id,
+              name: data.user.user_metadata?.full_name || data.user.email || "User",
+              email: data.user.email || "",
+              role: data.user.user_metadata?.role || "patient",
+              centre: data.user.user_metadata?.centre || null,
+            });
+          }
+        }
+      }
+
+      if (mounted) setHydrated(true);
+    };
+
+    restore();
+
+    const { data: listener } = supabase
+      ? supabase.auth.onAuthStateChange(async (_event, session) => {
+          if (!session?.user) {
+            setUser(null);
+            return;
+          }
+          try {
+            setUser(await getProfile(session.user));
+          } catch {
+            setUser({
+              id: session.user.id,
+              name: session.user.user_metadata?.full_name || session.user.email || "User",
+              email: session.user.email || "",
+              role: session.user.user_metadata?.role || "patient",
+              centre: session.user.user_metadata?.centre || null,
+            });
+          }
+        })
+      : { data: null as any };
+
+    return () => {
+      mounted = false;
+      listener?.subscription?.unsubscribe?.();
+    };
   }, []);
+
   useEffect(() => {
     if (!hydrated) return;
-    localStorage.setItem("swasthsetu", JSON.stringify({ lang, dark, user }));
+    localStorage.setItem("swasthsetu_prefs", JSON.stringify({ lang, dark }));
     document.documentElement.classList.toggle("dark", dark);
     document.documentElement.lang = lang;
-  }, [lang, dark, user, hydrated]);
+  }, [lang, dark, hydrated]);
 
   const t = I18N[lang];
   const T = themes[dark ? "dark" : "light"];
@@ -54,10 +108,41 @@ export default function AppProvider({ children }: { children: React.ReactNode })
   const showToast = (msg: string) => { setToast(msg); if (toastTimer.current) clearTimeout(toastTimer.current); toastTimer.current = setTimeout(() => setToast(null), 2600); };
   const setPage = (key: string) => router.push(ROUTES[key] || "/dashboard");
   const setView = (v: string) => router.push(v === "login" ? "/login" : v === "app" ? "/dashboard" : "/");
-  const login = (u: any) => { setUser(u); router.push("/dashboard"); };
-  const logout = () => { setUser(null); router.push("/"); };
-  const demoLogin = (role: string) => { const u = DEMO_USERS.find((d) => d.role === role); if (u) login(u); };
+  const login = async (email: string, password?: string) => {
+    const appUser = await signInWithEmail(email, password || "");
+    setUser(appUser);
+    router.push(routeForRole(appUser.role));
+    return appUser;
+  };
 
-  const ctx = { t, T, lang, setLang, dark, setDark, user, login, logout, demoLogin, page, setPage, setView, meds, setMeds, centres: CENTRES, alerts, toast, showToast, focusCentre, setFocusCentre, hydrated };
+  const signupPatient = async (payload: PatientSignupPayload) => {
+    const result = await signUpPatient(payload);
+    if (result.user) {
+      setUser(result.user);
+      router.push(routeForRole(result.user.role));
+    }
+    return result;
+  };
+
+  const forgotPassword = async (email: string) => {
+    await sendPasswordReset(email);
+  };
+
+  const logout = async () => {
+    try { if (supabase) await signOutUser(); } catch {}
+    setUser(null);
+    router.push("/");
+  };
+
+  const demoLogin = (role: string) => {
+    const u = DEMO_USERS.find((d) => d.role === role);
+    if (!u) return;
+    // Real-auth only: demo buttons fill credentials on the login page.
+    // They do not create a local/mock session here. Seed these users in Supabase
+    // first if you want one-click demo credentials to authenticate.
+    router.push(`/login?email=${encodeURIComponent(u.email)}`);
+  };
+
+  const ctx = { t, T, lang, setLang, dark, setDark, user, setUser, login, signupPatient, forgotPassword, logout, demoLogin, page, setPage, setView, meds, setMeds, centres: CENTRES, alerts, toast, showToast, focusCentre, setFocusCentre, hydrated };
   return <Ctx.Provider value={ctx}>{children}</Ctx.Provider>;
 }
